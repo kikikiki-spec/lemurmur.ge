@@ -1,5 +1,15 @@
 # LE MURMURE QA report
 
+## Vercel preparation — 16 November 2026
+
+- `npm test`: all 6 tests passed, including the original enquiry tests and new deployment tests.
+- `npm run build`: passed; `dist/` contains only the website files and five runtime assets. Tests confirm all published HTML, CSS, JavaScript and images match their source bytes, every local HTML reference resolves, and stale output is removed on rebuild.
+- `vercel.json` configures Other/static, `npm run build`, `dist`, no dependency installation and no serverless functions. `server.js` remains a local preview tool, with `npm run preview` serving the built output.
+- The full Chrome suite passed against `npm run preview`, exercising the actual production output at all 15 language/viewport combinations. No translation gaps, runtime errors or missing local assets were found. Mobile navigation, gallery, email enquiry validation and preview, clipboard copy, language persistence, animations and fallback modes passed.
+- Vercel QA screenshots were written to `/private/tmp/lemurmure-vercel-qa` to avoid replacing the tracked design screenshots.
+- No design, translation, image or client-side application files were changed. The form remains a visitor-sent email enquiry with explicit booking-confirmation notices. No real email was sent during testing.
+- Vercel account import and deployment are still to be performed using the documented settings; this verification covers the build and its served output locally.
+
 Verified on 16 November 2026 using Node.js 24 and headless Google Chrome on this Mac.
 
 ## Results

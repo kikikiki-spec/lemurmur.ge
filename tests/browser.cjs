@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const baseUrl = process.env.PREVIEW_URL || 'http://localhost:4173';
-const output = path.join(__dirname, '..', 'docs', 'screenshots');
+const output = process.env.BROWSER_ARTIFACTS_DIR || path.join(__dirname, '..', 'docs', 'screenshots');
 fs.mkdirSync(output, { recursive: true });
 
 (async () => {

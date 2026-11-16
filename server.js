@@ -1,8 +1,12 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
-const root = __dirname;
+const root = process.argv.includes('--dist') ? path.join(__dirname, 'dist') : __dirname;
 const port = Number(process.env.PORT || 4173);
+if (!fs.existsSync(path.join(root, 'index.html'))) {
+  console.error('Website files are missing. Run npm run build before npm run preview.');
+  process.exit(1);
+}
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.md': 'text/plain; charset=utf-8' };
 const server = http.createServer((request, response) => {
   let pathname;

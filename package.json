@@ -5,6 +5,8 @@
   "description": "LE MURMURE business apartments — multilingual boutique hospitality website",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test tests/core.test.js"
+    "build": "node scripts/build.js",
+    "preview": "node server.js --dist",
+    "test": "node --test tests/*.test.js"
   }
 }

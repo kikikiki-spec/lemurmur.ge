@@ -30,6 +30,8 @@ The recipient is `businesshalllemurmure@gmail.com`. The email text uses English 
 - `app.js`: language preference, menus, gallery, form and animations.
 - `assets/`: locally stored illustrative photos and provisional favicon. See `assets/README.md` for sources and replacement instructions.
 - `server.js`: dependency-free local preview server.
+- `scripts/build.js`: copies only website files and image/font assets into `dist/` for static deployment.
+- `vercel.json`: version-controlled Vercel build and output settings.
 - `tests/`: enquiry tests and browser QA script.
 
 No identifiable LE MURMURE logo or property photographs were found in the accessible project locations. All four photographs are explicitly labelled illustrative placeholders, and the footer labels the provisional text wordmark. The decorative location graphic is labelled as an illustration, with a separate working Google Maps link to the supplied address. Replace the illustrative images and text logo with approved assets before a public launch.
@@ -48,4 +50,35 @@ Browser QA is recorded in `docs/qa-report.md`. The browser script can be rerun w
 PLAYWRIGHT_PATH=/absolute/path/to/playwright node tests/browser.cjs
 ```
 
-All runtime website files can be uploaded unchanged to any static web host. There is no framework, npm dependency, build step or API key.
+## Deploy on Vercel
+
+This is a **static website**, including its reservation enquiry flow. `server.js` is only a local preview tool; Vercel serves the built files directly. No serverless functions, API keys, environment variables or runtime npm dependencies are required. The existing mailto flow and copy-details fallback work the same way over Vercel HTTPS. Visitors still send the prepared enquiry from their own email app or webmail; no booking is automatically confirmed.
+
+Import `kikikiki-spec/lemurmur.ge` in Vercel and use:
+
+| Setting | Value |
+| --- | --- |
+| Application / Framework Preset | **Other** |
+| Root Directory | Repository root (`.`) |
+| Production Branch | `main` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Install Command | Empty / skip installation |
+| Development Command (local Vercel CLI only) | `npm start` |
+| Environment Variables | None |
+
+`vercel.json` explicitly sets the preset (`framework: null` means Other), build command, output directory and skipped install command. Leave the dashboard consistent with these settings. Do not select a Node.js/Express application preset or use `npm start` as the Build Command: the production site does not run a persistent Node server.
+
+The dependency-free build copies the HTML, CSS, client-side scripts and supported image/font assets without changing their contents. Development tools, documentation, tests, repository metadata and asset notes are excluded from the published directory. `dist/` is generated locally and during Vercel builds; it is not committed.
+
+To verify and preview the exact deployment files locally:
+
+```sh
+npm test
+npm run build
+npm run preview
+```
+
+Open http://localhost:4173. `npm start` continues to preview the source files as before. Built files in `dist/` can also be uploaded to any static host.
+
+The build, framework and output settings follow the [Vercel build documentation](https://vercel.com/docs/builds/configure-a-build) and [version-controlled configuration documentation](https://vercel.com/docs/project-configuration/vercel-json).
