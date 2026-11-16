@@ -1,0 +1,10 @@
+{
+  "name": "le-murmure",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LE MURMURE business apartments — multilingual boutique hospitality website",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/core.test.js"
+  }
+}
